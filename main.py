@@ -53,12 +53,13 @@ def webScrapping(db: Session = Depends(get_db)):
 
         # Confirma as inserções
         db.commit()
-        print("Dados inseridos com sucesso!")
+        return{"Dados":"inseridos com sucesso!"}
 
     else:
-        print("Seção de navegação não encontrada.")
+        return{"Seção":"de navegação não encontrada."}
 
 # uvicorn app.main:app --reload --root-path server
+# uvicorn main:app --reload
 
 # ATUALIZAR
 # git fetch origin

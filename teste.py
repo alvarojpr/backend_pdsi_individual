@@ -14,4 +14,9 @@ def teste_quadrado():
     assert response.status_code == 200
     assert response.text == str(num ** 2)
 
+def teste_scrapping():
+    response = client.post(f"/webscrapping")
+    assert response.status_code == 200
+    assert response.json() == {"Dados":"inseridos com sucesso!"} or response.json() == {"Seção":"de navegação não encontrada."}
+
 # no terminal, pytest teste.py
