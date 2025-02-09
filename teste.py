@@ -6,12 +6,12 @@ client = TestClient(app)
 def teste_hello():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"Hello": "World"}
+    assert response.json() == {"Hello": "World!"}
 
 def teste_quadrado():
     num = 4
     response = client.get(f"/quadrado{num}")
     assert response.status_code == 200
-    assert response.text == str(num ** 3)
+    assert response.text == str(num ** 2)
 
 # no terminal, pytest teste.py
