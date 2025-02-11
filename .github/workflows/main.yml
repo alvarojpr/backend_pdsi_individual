@@ -35,7 +35,10 @@ jobs:
 
       - name: Definir variável DATABASE_URL
         run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
-
+        env: 
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Verificar DATABASE_URL
+        run: '[ -z "$DATABASE_URL" ] && echo "DATABASE_URL não está definida" || echo "DATABASE_URL está definida"'
       - name: Esperando o PostgreSQL ficar pronto
         run: sleep 15
 
