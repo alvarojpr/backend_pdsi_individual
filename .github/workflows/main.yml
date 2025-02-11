@@ -13,8 +13,8 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: admin
-          POSTGRES_DB: nome_database
+          POSTGRES_PASSWORD: 123
+          POSTGRES_DB: desafio
         ports:
           - 5432:5432
 
@@ -33,10 +33,14 @@ jobs:
       - name: Instalar dependências
         run: pip install -r requirements.txt
 
+      - name: Definir variável DATABASE_URL
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+
       - name: Esperando o PostgreSQL ficar pronto
         run: sleep 15
 
       - name: Executar pytest
         env:
-          DATABASE_URL: postgresql://postgres:admin@localhost:5432/nome_database
+          DATABASE_URL: ${{ env.DATABASE_URL }}
         run: pytest teste.py
+
