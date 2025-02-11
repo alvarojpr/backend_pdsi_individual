@@ -33,18 +33,13 @@ jobs:
 
       - name: Instalar dependências
         run: pip install -r requirements.txt
-
-      - name: Definir variável DATABASE_URL
-        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
-        env: 
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      - name: Verificar DATABASE_URL
-        run: '[ -z "$DATABASE_URL" ] && echo "DATABASE_URL não está definida" || echo "DATABASE_URL está definida"'
+      
       - name: Esperando o PostgreSQL ficar pronto
         run: sleep 15
 
       - name: Executar pytest
         env:
-          DATABASE_URL: ${{ env.DATABASE_URL }}
+          DATABASE_URL: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}
         run: pytest teste.py
+
 
