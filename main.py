@@ -4,15 +4,31 @@ from database import engine, get_db
 from sqlalchemy.orm import Session
 import requests
 from bs4 import BeautifulSoup
+from fastapi.middleware.cors import CORSMiddleware
 
 
 model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # ["http://localhost:3000"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.get("/")
 def read_root():
     return {"Hello":"World!"}
+
+@app.get("/mensagens")
+def listar_mensagens(db: Session = Depends(get_db)):
+    mensagens = db.query(model.Model_Mensagem).all()
+    return mensagens
+
 
 @app.post("/criar", status_code=status.HTTP_201_CREATED)
 def criar_valores(nova_mensagem: classes.Mensagem, db: Session = Depends(get_db)):
