@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from fastapi.middleware.cors import CORSMiddleware
 
+#teste 2
 
 model.Base.metadata.create_all(bind=engine)
 
